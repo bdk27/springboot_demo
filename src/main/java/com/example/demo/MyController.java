@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/home")
 @RestController
 public class MyController {
 
@@ -16,5 +17,10 @@ public class MyController {
     public String test() {
         printer.print("你好");
         return "hello world";
+    }
+
+    @RequestMapping("/user")
+    public String user() {
+        return "brian歡迎回來";
     }
 }
