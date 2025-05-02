@@ -2,7 +2,9 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -31,5 +33,20 @@ public class MyController {
         Student student = new Student();
         student.setName("Brian");
         return student;
+    }
+
+    @RequestMapping("/test1")
+    public String test1(@RequestParam Integer id,
+                        @RequestParam String name) {
+        System.out.println("id: " + id);
+        System.out.println("name: " + name);
+        return "id: " + id + " name: " + name;
+    }
+
+    @RequestMapping("/test2")
+    public String test2(@RequestBody Student student) {
+        System.out.println("student id: " + student.getId());
+        System.out.println("student name: " + student.getName());
+        return "Hello test2";
     }
 }
