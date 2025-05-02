@@ -2,10 +2,7 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +46,11 @@ public class MyController {
         System.out.println("student name: " + student.getName());
         return "Hello test2";
     }
+
+    @RequestMapping("/test3")
+    public String test3(@RequestHeader String info) {
+        System.out.println("header info: " + info);
+        return "Hello test3";
+    }
+
 }
