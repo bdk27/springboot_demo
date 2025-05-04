@@ -1,8 +1,17 @@
 package com.example.demo;
 
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Student {
+
+    @NotBlank
     String name;
-    Integer id;
+
+    @NotNull
+    @Max(50)
+    int id;
 
     public String getName() {
         return name;
