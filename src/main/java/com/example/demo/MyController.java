@@ -2,6 +2,9 @@ package com.example.demo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -53,12 +56,26 @@ public class MyController {
         return "Hello test3";
     }
 
-
     @RequestMapping("/test4/{id}/{name}")
     public String test4(@PathVariable int id,
                         @PathVariable String name) {
         System.out.println("path id: " + id);
         System.out.println("path name: " + name);
         return "Hello test4";
+    }
+
+    @RequestMapping("/test5")
+    public ResponseEntity<String> test5() {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Hello test5");
+    }
+
+    @RequestMapping("/test6")
+    public String test6() {
+        throw new RuntimeException("Hello test6");
+    }
+
+    @RequestMapping("/test7")
+    public String test7() {
+        throw new IllegalArgumentException("Hello test6");
     }
 }
