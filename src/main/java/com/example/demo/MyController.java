@@ -78,4 +78,10 @@ public class MyController {
     public String test7() {
         throw new IllegalArgumentException("Hello test6");
     }
+
+    @RequestMapping("/test8")
+    public String test8() {
+        System.out.println("Hello test8");
+        return "Hello test8";
+    }
 }
