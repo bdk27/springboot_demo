@@ -56,21 +56,46 @@ public class StudentController {
         return "執行一批 INSERT sql";
     }
 
-    @GetMapping("/students")
-    public List<Student> select() {
-        String sql = "SELECT id, name FROM student";
+//    @GetMapping("/students")
+//    public List<Student> select() {
+//        String sql = "SELECT id, name FROM student";
+//
+//        Map<String, Object> map = new HashMap<>();
+//
+//        List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
+//
+//        return list;
+//    }
+
+    @GetMapping("/students/{studentId}")
+    public Student select(@PathVariable int studentId) {
+        String countSql = "SELECT count(*) FROM student";
+
+        Map<String, Object> countMap = new HashMap<>();
+
+        Integer count = namedParameterJdbcTemplate.queryForObject(countSql, countMap, int.class);
+
+        System.out.println("student table 中的總數: " + count);
+
+
+        String sql = "SELECT id, name FROM student WHERE id = :studentId";
 
         Map<String, Object> map = new HashMap<>();
+        map.put("studentId", studentId);
 
         List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
 
-        return list;
+        if(!list.isEmpty()) {
+            return list.getFirst();
+        } else {
+            return null;
+        }
     }
 
-    @GetMapping("/students/{studentId}")
-    public String read(@PathVariable @Min(50) int studentId) {
-        return "執行 read 操作";
-    }
+//    @GetMapping("/students/{studentId}")
+//    public String read(@PathVariable @Min(50) int studentId) {
+//        return "執行 read 操作";
+//    }
 
     @PutMapping("/students/{studentId}")
     public String update(@PathVariable int studentId,
