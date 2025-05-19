@@ -1,7 +1,9 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.Student;
+import com.example.demo.StudentRowMapper;
+import com.example.demo.service.StudentService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -20,6 +22,9 @@ public class StudentController {
 
     @Autowired
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    @Autowired
+    private StudentService studentService;
 
     @PostMapping("/students")
     public String create(@RequestBody @Valid Student student) {
@@ -78,18 +83,7 @@ public class StudentController {
         System.out.println("student table 中的總數: " + count);
 
 
-        String sql = "SELECT id, name FROM student WHERE id = :studentId";
-
-        Map<String, Object> map = new HashMap<>();
-        map.put("studentId", studentId);
-
-        List<Student> list = namedParameterJdbcTemplate.query(sql, map, new StudentRowMapper());
-
-        if(!list.isEmpty()) {
-            return list.getFirst();
-        } else {
-            return null;
-        }
+        return studentService.getById(studentId);
     }
 
 //    @GetMapping("/students/{studentId}")
