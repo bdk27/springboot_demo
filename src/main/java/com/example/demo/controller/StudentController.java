@@ -28,35 +28,16 @@ public class StudentController {
 
     @PostMapping("/students")
     public String create(@RequestBody @Valid Student student) {
-        String sql = "INSERT INTO student(name) VALUE(:studentName)";
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("studentName", student.getName());
-
-        KeyHolder keyHolder = new GeneratedKeyHolder();
-
-        namedParameterJdbcTemplate.update(sql, new MapSqlParameterSource(map), keyHolder);
-
-        int id = keyHolder.getKey().intValue();
-        System.out.println("mysql自動生成 id 為:" + id);
+        studentService.insert(student);
 
         return "執行 INSERT sql";
     }
 
     @PostMapping("/students/batch")
     public String insertList(@RequestBody List<Student> studentList) {
-        String sql = "INSERT INTO student(name) VALUE(:studentName)";
 
-        MapSqlParameterSource[] parameterSources = new MapSqlParameterSource[studentList.size()];
-
-        for (int i = 0; i < studentList.size(); i++) {
-            Student student = studentList.get(i);
-
-            parameterSources[i] = new MapSqlParameterSource();
-            parameterSources[i].addValue("studentName", student.getName());
-        }
-
-        namedParameterJdbcTemplate.batchUpdate(sql, parameterSources);
+        studentService.batchInsert(studentList);
 
         return "執行一批 INSERT sql";
     }
@@ -107,12 +88,9 @@ public class StudentController {
 
     @DeleteMapping("/students/{studentId}")
     public String delete(@PathVariable int studentId) {
-        String sql = "DELETE FROM student WHERE id = :studentId";
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("studentId", studentId);
+        studentService.deleteById(studentId);
 
-        namedParameterJdbcTemplate.update(sql, map);
         return "執行 delete 操作";
     }
 }
