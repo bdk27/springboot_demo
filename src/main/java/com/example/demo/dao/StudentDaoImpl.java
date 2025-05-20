@@ -1,7 +1,7 @@
 package com.example.demo.dao;
 
-import com.example.demo.Student;
-import com.example.demo.StudentRowMapper;
+import com.example.demo.model.Student;
+import com.example.demo.mapper.StudentRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -66,6 +66,7 @@ public class StudentDaoImpl implements StudentDao {
         namedParameterJdbcTemplate.batchUpdate(sql, parameterSources);
     }
 
+    @Override
     public void deleteById(int studentId) {
         String sql = "DELETE FROM student WHERE id = :studentId";
 
